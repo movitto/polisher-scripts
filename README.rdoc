@@ -1,0 +1,14 @@
+== Rubygem Polisher Scripts
+Copyright (C) 2010 Red Hat, Inc.
+
+Written by Mohammed Morsi <mmorsi@redhat.com>
+
+=== Intro
+Scripts using the http://github.com/movitto/polisher DSL to run 
+releases on specified versions of various upstream projects, generating
+RPM packages / yum repos with the results.
+
+=== Running
+rake register [project=project_name]
+rake release [project=project_name]
+rake remove [project=project_name]
