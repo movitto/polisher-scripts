@@ -11,6 +11,13 @@ polisher "http://localhost:3000"
 
 @morsiorg_polisher_sources = "http://projects.morsi.org/polisher/sources"
 
+@system_mock_env = "fedora-12-x86_64"
+
+# make sure to copy or symlink the files in the mock/ subdir to /etc/mock/
+@stable_mock_env = "polisher-stable-f12-x86_64"
+@maintenance_mock_env = "polisher-maintenance-f12-x86_64"
+@devel_mock_env = "polisher-devel-f12-x86_64"
+
 desc "register all projects"
 task :register do
   scripts = Dir['projects/*/register.rb']

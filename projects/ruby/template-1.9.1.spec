@@ -33,9 +33,9 @@
 
 %global _normalized_cpu %(echo `echo %{_target_cpu} | sed 's/^ppc/powerpc/'`)
 
-Name:               ruby%{?_compatsuffix}
+Name:               ruby
 
-Version:            %{_patchlevel}
+Version:            %{?rubymmtver}.%{_patchlevel}
 
 Release:            11%{?dist}
 License:            Ruby or GPLv2
@@ -69,6 +69,9 @@ Patch1:             ruby-1.9.1-p243-always-use-i386.patch
 # as two separate patches. Maybe we'll truly fix this once it is in CVS.
 Patch2:             ruby-1.9.1-p243-mmt-searchpath.patch
 Patch3:             ruby-1.9.1-p243-mmt-searchpath-2.patch
+
+# patch33 brought over from ruby 1.8.6
+Patch33:  ruby-1.9.1-mkmf-use-shared.patch
 
 # EPEL patches
 Patch100:           ruby-1.9.1-p376-epel-test.patch
@@ -204,6 +207,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 # Again these two patches belong together
 %patch2 -p1
 %patch3 -p1
+%patch33
 %if 0%{?rhel} > 0
 %patch100 -p1
 %endif
@@ -223,8 +227,8 @@ export CFLAGS
     --with-sitearchdir='%{ruby_sitearch}' \
     --with-vendordir='%{ruby_vendorlib}' \
     --with-vendorarchdir='%{ruby_vendorarch}' \
-    --program-suffix='%{?_compatsuffix}' \
-    --with-rubyhdrdir='%{_includedir}/ruby%{?_compatsuffix}' \
+    --program-suffix='' \
+    --with-rubyhdrdir='%{_includedir}/ruby' \
     --enable-shared \
     --enable-pthread \
     --disable-rpath \
@@ -254,55 +258,55 @@ done
 
 # Fix shebang
 for script in `find %{buildroot}/%{ruby_sitelib} -type f -name "*.rb"`; do
-    sed -r -i -e 's|(.*)/bin/ruby|%{_bindir}/ruby%{?_compatsuffix}|g' $script
+    sed -r -i -e 's|(.*)/bin/ruby|%{_bindir}/ruby|g' $script
 done
 
-if [ ! -d %{buildroot}/%{_includedir}/ruby%{?_compatsuffix}/ ]; then
-    mv %{buildroot}/%{_includedir}/ruby%{?_compatsuffix}-*/ %{buildroot}/%{_includedir}/ruby%{?_compatsuffix}/
+if [ ! -d %{buildroot}/%{_includedir}/ruby/ ]; then
+    mv %{buildroot}/%{_includedir}/ruby-*/ %{buildroot}/%{_includedir}/ruby/
 fi
 
 %clean
 rm -rf %{buildroot}
 
 %post
-%{_sbindir}/alternatives --install %{_bindir}/ruby ruby %{_bindir}/ruby%{?_compatsuffix} 90 \
-    --slave %{_bindir}/erb ruby-erb %{_bindir}/erb%{?_compatsuffix} \
-    --slave %{_bindir}/gem ruby-gem %{_bindir}/gem%{?_compatsuffix} \
-    --slave %{_bindir}/rake ruby-rake %{_bindir}/rake%{?_compatsuffix} \
-    --slave %{_bindir}/testrb ruby-testrb %{_bindir}/testrb%{?_compatsuffix} \
-    --slave %{_mandir}/man1/ruby.1.gz rubyman %{_mandir}/man1/ruby%{?_compatsuffix}.1.gz \
-    --slave %{_mandir}/man1/erb.1.gz ruby-erbman %{_mandir}/man1/erb%{?_compatsuffix}.1.gz \
-    --slave %{_mandir}/man1/rake.1.gz ruby-rakeman %{_mandir}/man1/rake%{?_compatsuffix}.1.gz
+%{_sbindir}/alternatives --install %{_bindir}/ruby ruby %{_bindir}/ruby 90 \
+    --slave %{_bindir}/erb ruby-erb %{_bindir}/erb \
+    --slave %{_bindir}/gem ruby-gem %{_bindir}/gem \
+    --slave %{_bindir}/rake ruby-rake %{_bindir}/rake \
+    --slave %{_bindir}/testrb ruby-testrb %{_bindir}/testrb \
+    --slave %{_mandir}/man1/ruby.1.gz rubyman %{_mandir}/man1/ruby.1.gz \
+    --slave %{_mandir}/man1/erb.1.gz ruby-erbman %{_mandir}/man1/erb.1.gz \
+    --slave %{_mandir}/man1/rake.1.gz ruby-rakeman %{_mandir}/man1/rake.1.gz
 
 %preun
 if [ $1 = 0 ]; then
-    %{_sbindir}/alternatives --remove ruby %{_bindir}/ruby%{?_compatsuffix}
+    %{_sbindir}/alternatives --remove ruby %{_bindir}/ruby
 fi
 
 %post irb
-%{_sbindir}/alternatives --install %{_bindir}/irb ruby-irb %{_bindir}/irb%{?_compatsuffix} 90 \
-    --slave %{_mandir}/man1/irb.1.gz ruby-irbman %{_mandir}/man1/irb%{?_compatsuffix}.1.gz
+%{_sbindir}/alternatives --install %{_bindir}/irb ruby-irb %{_bindir}/irb 90 \
+    --slave %{_mandir}/man1/irb.1.gz ruby-irbman %{_mandir}/man1/irb.1.gz
 
 %preun irb
 if [ $1 = 0 ]; then
-    %{_sbindir}/alternatives --remove ruby-irb %{_bindir}/irb%{?_compatsuffix}
+    %{_sbindir}/alternatives --remove ruby-irb %{_bindir}/irb
 fi
 
 %post rdoc
-%{_sbindir}/alternatives --install %{_bindir}/rdoc ruby-rdoc %{_bindir}/rdoc%{?_compatsuffix} 90
+%{_sbindir}/alternatives --install %{_bindir}/rdoc ruby-rdoc %{_bindir}/rdoc 90
 
 %preun rdoc
 if [ $1 = 0 ]; then
-    %{_sbindir}/alternatives --remove ruby-rdoc %{_bindir}/rdoc%{?_compatsuffix}
+    %{_sbindir}/alternatives --remove ruby-rdoc %{_bindir}/rdoc
 fi
 
 %post ri
-%{_sbindir}/alternatives --install %{_bindir}/ri ruby-ri %{_bindir}/ri%{?_compatsuffix} 90 \
-    --slave %{_mandir}/man1/ri.1.gz ruby-riman %{_mandir}/man1/ri%{?_compatsuffix}.1.gz
+%{_sbindir}/alternatives --install %{_bindir}/ri ruby-ri %{_bindir}/ri 90 \
+    --slave %{_mandir}/man1/ri.1.gz ruby-riman %{_mandir}/man1/ri.1.gz
 
 %preun ri
 if [ $1 = 0 ]; then
-    %{_sbindir}/alternatives --remove ruby-ri %{_bindir}/ri%{?_compatsuffix}
+    %{_sbindir}/alternatives --remove ruby-ri %{_bindir}/ri
 fi
 
 %post libs -p /sbin/ldconfig
@@ -321,14 +325,14 @@ fi
 %doc ToDo
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
-%{_bindir}/erb%{?_compatsuffix}
-%{_bindir}/gem%{?_compatsuffix}
-%{_bindir}/rake%{?_compatsuffix}
-%{_bindir}/ruby%{?_compatsuffix}
-%{_bindir}/testrb%{?_compatsuffix}
-%{_mandir}/man1/erb%{?_compatsuffix}.1*
-%{_mandir}/man1/rake%{?_compatsuffix}.1*
-%{_mandir}/man1/ruby%{?_compatsuffix}.1*
+%{_bindir}/erb
+%{_bindir}/gem
+%{_bindir}/rake
+%{_bindir}/ruby
+%{_bindir}/testrb
+%{_mandir}/man1/erb.1*
+%{_mandir}/man1/rake.1*
+%{_mandir}/man1/ruby.1*
 
 %files devel
 %defattr(-, root, root, -)
@@ -338,15 +342,15 @@ fi
 %doc LEGAL
 %doc LGPL
 %doc README.EXT
-%{_includedir}/ruby%{?_compatsuffix}
-%{_libdir}/libruby%{?_compatsuffix}.so
+%{_includedir}/ruby
+%{_libdir}/libruby.so
 
 %files irb
 %defattr(-, root, root, -)
-%{_bindir}/irb%{?_compatsuffix}
+%{_bindir}/irb
 %{ruby_vendorlib_191}/irb.rb
 %{ruby_vendorlib_191}/irb
-%{_mandir}/man1/irb%{?_compatsuffix}.1*
+%{_mandir}/man1/irb.1*
 
 %files libs
 %defattr(-, root, root, -)
@@ -402,7 +406,7 @@ fi
 %{ruby_vendorlib_191}/webrick
 %{ruby_vendorlib_191}/xmlrpc
 %{ruby_vendorlib_191}/yaml
-%{_libdir}/libruby%{?_compatsuffix}.so.*
+%{_libdir}/libruby.so.*
 
 %files mode
 %defattr(-, root, root, -)
@@ -411,18 +415,18 @@ fi
 
 %files rdoc
 %defattr(-, root, root, -)
-%{_bindir}/rdoc%{?_compatsuffix}
+%{_bindir}/rdoc
 %{ruby_vendorlib_191}/rdoc
 
 %files ri
 %defattr(-, root, root, -)
-%{_bindir}/ri%{?_compatsuffix}
-%{_datadir}/ri%{?_compatsuffix}
-%{_mandir}/man1/ri%{?_compatsuffix}.1*
+%{_bindir}/ri
+%{_datadir}/ri
+%{_mandir}/man1/ri.1*
 
 %files static
 %defattr(-, root, root, -)
-%{_libdir}/libruby%{?_compatsuffix}-static.a
+%{_libdir}/libruby-static.a
 
 %files tcltk
 %defattr(-, root, root, -)

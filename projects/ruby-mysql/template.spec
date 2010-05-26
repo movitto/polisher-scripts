@@ -3,7 +3,7 @@
 
 Name:           <%= name %>
 Version:        <%= version %>
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A Ruby interface to MySQL
 
 Group:          Development/Languages
@@ -23,7 +23,7 @@ Ruby programs that the MySQL C API provides for C programs.
 %setup -q -n mysql-ruby-%{version}
 
 %build
-ruby extconf.rb --with-mysql-config
+ruby extconf.rb --with-mysql-config=/usr/lib64/mysql/mysql_config
 make %{?_smp_mflags}
 
 %install
@@ -39,6 +39,9 @@ rm -rf $RPM_BUILD_ROOT
 %{ruby_sitearchdir}/mysql.so
 
 %changelog
+* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 2.8-5
+- bumped release
+
 * Fri Aug 21 2009 Tomas Mraz <tmraz@redhat.com> - 2.8-4
 - rebuilt with new openssl
 

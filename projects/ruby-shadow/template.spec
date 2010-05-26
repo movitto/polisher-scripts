@@ -4,7 +4,7 @@
 
 Name:           <%= name %>
 Version:        <%= version %>
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Ruby bindings for shadow password access
 Group:          System Environment/Libraries
 License:        Public Domain
@@ -15,8 +15,8 @@ Patch1:         ruby-shadow-1.4.1-struct.patch
 Patch2:         ruby-shadow-1.4.1-depend.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  ruby ruby-devel
-BuildRequires:  ruby(abi) = 1.8
-Requires:       ruby(abi) = 1.8
+BuildRequires:  ruby(abi)
+Requires:       ruby(abi)
 Provides:       ruby(shadow) = %{version}-%{release}
 
 %description
@@ -46,6 +46,9 @@ rm -rf %{buildroot}
 %{ruby_sitearch}/shadow.so
 
 %changelog
+* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 1.4.1-14
+- bumped release for polisher
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.1-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

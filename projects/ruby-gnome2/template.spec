@@ -8,7 +8,7 @@
 # When changing release number, please make it sure that
 # the new EVR won't be higher than the one of higher branch!!
 #
-%define         mainrel                5
+%define         mainrel                6
 
 # Note
 # Currently this spec file does not support libgda module.
@@ -43,9 +43,9 @@ Patch11:  ruby-gnome2-0.19.3-xul192.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ruby ruby-devel gtk2-devel libgnome-devel libgnomeui-devel
-BuildRequires:  ruby(abi) = 1.8
+BuildRequires:  ruby(abi)
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gnomecanvas2) = %{version}-%{release}
 
 Provides:       ruby(gnome2) =  %{version}-%{release}
@@ -73,7 +73,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel glib2-devel atk-devel 
 #BuildRequires:  ruby(glib2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8 ruby(glib2) = %{version}-%{release}
+Requires:       ruby(abi) ruby(glib2) = %{version}-%{release}
 
 Provides:       ruby(atk) = %{version}-%{release}
 
@@ -102,7 +102,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel
 BuildRequires:  libbonoboui-devel
 
-Requires:       ruby(abi) = 1.8 ruby(gtk2) = %{version}-%{release}
+Requires:       ruby(abi) ruby(gtk2) = %{version}-%{release}
 
 Provides:       ruby(bonobo2) = %{version}-%{release}
 
@@ -128,7 +128,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel
 BuildRequires:  libbonoboui-devel libgnomeui-devel
 
-Requires:       ruby(abi) = 1.8 ruby(gnome2) = %{version}-%{release}
+Requires:       ruby(abi) ruby(gnome2) = %{version}-%{release}
 
 Provides:       ruby(bonoboui2) = %{version}-%{release}
 
@@ -153,7 +153,7 @@ Group:          System Environment/Libraries
 
 BuildRequires:  ruby ruby-devel GConf2-devel
 
-Requires:       ruby(abi) = 1.8 ruby(glib2) = %{version}-%{release}
+Requires:       ruby(abi) ruby(glib2) = %{version}-%{release}
 
 Provides:       ruby(gconf2) =  %{version}-%{release}
 
@@ -179,7 +179,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel gtk2-devel ruby-cairo-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(gtk2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release} ruby(cairo)
 
 Provides:       ruby(gdkpixbuf2) =  %{version}-%{release}
@@ -205,7 +205,7 @@ Group:          System Environment/Libraries
 
 BuildRequires:  ruby ruby-devel glib2-devel
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 
 Provides:       ruby(glib2) =  %{version}-%{release}
 
@@ -232,7 +232,7 @@ Group:          System Environment/Libraries
 
 BuildRequires:  ruby ruby-devel gtk2-devel libgnomecanvas-devel
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release} 
 Requires:       ruby(libart2) = %{version}-%{release}
 
@@ -261,7 +261,7 @@ BuildRequires:  ruby ruby-devel libgnomeprint22-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(pango-devel) = %{version} 
 #BuildRequires:  ruby(libart2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release} ruby(pango) = %{version}-%{release}
 Requires:       ruby(libart2) = %{version}-%{release}
 
@@ -289,7 +289,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel libgnomeprintui22-devel
 #BuildRequires:  ruby(gtk2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release} ruby(gnomeprint2) = %{version}-%{release}
 
 Provides:       ruby(gnomeprintui2) =  %{version}-%{release}
@@ -315,7 +315,7 @@ Group:          System Environment/Libraries
 
 BuildRequires:  ruby ruby-devel gnome-vfs2-devel
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release}
 
 Provides:       ruby(gnomevfs) =  %{version}-%{release}
@@ -341,7 +341,7 @@ Group:          System Environment/Libraries
 
 BuildRequires:  ruby ruby-devel goocanvas-devel
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release}
 
 Provides:       ruby(goocanvas) =  %{version}-%{release}
@@ -368,7 +368,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel
 BuildRequires:  gstreamer-devel gstreamer-plugins-base-devel
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release}
 
 Provides:       ruby(gstreamer) = %{version}-%{release}
@@ -396,7 +396,7 @@ BuildRequires:  ruby gtk2-devel ruby-cairo-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(pango-devel) = %{version}
 
 Requires:       %{_bindir}/env
-Requires:       ruby(abi) = 1.8 
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release} ruby(atk) = %{version}-%{release}
 Requires:       ruby(pango) =  %{version}-%{release} ruby(cairo)
 Requires:       ruby(gdkpixbuf2) =  %{version}-%{release}
@@ -427,7 +427,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel gtk2-devel gtkglext-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(gtk2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(opengl)
 Requires:       ruby(gtk2) = %{version}-%{release}
 
@@ -454,7 +454,7 @@ Group:          System Environment/Libraries
 
 BuildRequires:  ruby ruby-devel gtk2-devel gtkhtml2-devel
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release}
 
 Provides:       ruby(gtkhtml2) = %{version}-%{release}
@@ -484,7 +484,7 @@ BuildRequires:  gecko-devel >= 1.9
 BuildRequires:  gecko-devel-unstable >= 1.9
 Requires:       gecko-libs >= 1.9
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release} 
 
 Provides:       ruby(gtkmozembed) = %{version}-%{release}
@@ -513,7 +513,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel gtksourceview-devel
 #BuildRequires:  ruby(gnome2) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release}
 
 Provides:       ruby(gtksourceview) = %{version}-%{release}
@@ -540,7 +540,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel gtksourceview2-devel
 #BuildRequires:  ruby(gnome2) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release}
 
 Provides:       ruby(gtksourceview2) = %{version}-%{release}
@@ -567,7 +567,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel libart_lgpl-devel libpng-devel libjpeg-devel
 #BuildRequires:  ruby(glib2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 
 Provides:       ruby(libart2) = %{version}-%{release}
 
@@ -596,7 +596,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel gtk2-devel libgnome-devel libglade2-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(gnome2) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release}
 Requires:       ruby(gnome2) = %{version}-%{release}
 
@@ -629,7 +629,7 @@ BuildRequires:  libgnomeui-devel
 
 Requires:       %{_bindir}/env
 Requires:       %{_bindir}/ruby
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gnome2) = %{version}-%{release}
 
 Provides:       ruby(panelapplet2) = %{version}-%{release}
@@ -656,7 +656,7 @@ Group:          System Environment/Libraries
 BuildRequires:  ruby ruby-devel glib2-devel pango-devel cairo-devel ruby-cairo-devel
 #BuildRequires:  ruby(glib2-devel) = %{version}
 
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(glib2) = %{version}-%{release} ruby(cairo)
 
 Provides:       ruby(pango) = %{version}-%{release}
@@ -690,7 +690,7 @@ BuildRequires:  poppler-glib-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(gdkpixbuf2) = %{version}
 
 Requires:       %{_bindir}/env
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gdkpixbuf2) = %{version}-%{release}
 Requires:       ruby(gtk2) = %{version}-%{release} ruby(cairo)
 
@@ -719,7 +719,7 @@ BuildRequires:  ruby ruby-devel librsvg2-devel ruby-cairo-devel
 #BuildRequires:  ruby(glib2-devel) = %{version} ruby(gdkpixbuf2) = %{version}
 
 Requires:       %{_bindir}/env
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gdkpixbuf2) = %{version}-%{release}
 Requires:       ruby(cairo)
 
@@ -748,7 +748,7 @@ BuildRequires:  ruby ruby-devel vte-devel
 #BuildRequires:  ruby(gtk2-devel) = %{version}
 
 Requires:       %{_bindir}/env
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(gtk2) = %{version}-%{release}
 
 Provides:       ruby(vte) = %{version}-%{release}
@@ -1100,6 +1100,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 0.19.3-6
+- removed static ruby abi version dep
+
 * Fri Nov 20 2009 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> - 0.19.3-5
 - Patch to compile with xulrunner 1.9.2
 

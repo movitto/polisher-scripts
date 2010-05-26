@@ -1,4 +1,4 @@
-# rubygem-daemons polisher events trigger
+# rubygem-shadow polisher events trigger
 
 # Trigger events
 project(:name => "ruby-shadow").released "1.4.1"

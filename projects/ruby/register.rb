@@ -65,15 +65,16 @@ project :name => "ruby" do |ruby|
     patch.version "*", :openssl_patch_version => "1.9.1-p243-", :corresponds_to => ruby.version("1.9.1")
   end
 
+  ruby.add_patch   :name => 'ruby-mkmf-use-shared', :uri => "#{@morsiorg_polisher_sources}/ruby-%{mkmf_patch_version}-mkmf-use-shared.patch?view=co" do |patch|
+    patch.version "*", :mkmf_patch_version => "1.8.6-p383", :corresponds_to => ruby.version("1.8.6")
+    patch.version "*", :mkmf_patch_version => "1.9.1",      :corresponds_to => ruby.version("1.9.1")
+  end
+
   ruby.add_patch   :name => 'ruby-1.8.6-p369-ri-gem_multipath', :uri => "#{@fedora_cvs}/ruby-1.8.6-p369-ri-gem_multipath.patch?view=co" do |patch|
     patch.version "*", :corresponds_to => ruby.version("1.8.6")
   end
 
   ruby.add_patch   :name => 'ruby-1.8head-irb-save-history', :uri => "#{@fedora_cvs}/ruby-1.8head-irb-save-history.patch?view=co" do |patch|
-    patch.version "*", :corresponds_to => ruby.version("1.8.6")
-  end
-
-  ruby.add_patch   :name => 'ruby-1.8.6-p383-mkmf-use-shared', :uri => "#{@fedora_cvs}/ruby-1.8.6-p383-mkmf-use-shared.patch?view=co" do |patch|
     patch.version "*", :corresponds_to => ruby.version("1.8.6")
   end
 
@@ -93,12 +94,16 @@ project :name => "ruby" do |ruby|
     patch.version "*", :corresponds_to => ruby.version("1.9.1")
   end
 
-  ruby.on_version "=", "1.8.6", "create rpm package", "#{@project_dir}/template-1.8.6.spec"
-  #ruby.on_version "=", "1.8.7", "create rpm package", "#{@project_dir}/template-1.8.7.spec" # TODO
-  ruby.on_version ">=", "1.9.1", "create rpm package", "#{@project_dir}/template-1.9.1.spec"
+  # TODO add events and release for ruby 1.8.7 (write to maintenance repo)
 
-  ruby.on_version "*",           "update yum repo", "#{@artifacts_dir}/repos/rawhide"
-  ruby.on_version "=",  "1.8.6", "update yum repo", "#{@artifacts_dir}/repos/stable"
-  ruby.on_version "=",  "1.8.7", "update yum repo", "#{@artifacts_dir}/repos/maintenance"
-  ruby.on_version ">=", "1.9.1", "update yum repo", "#{@artifacts_dir}/repos/devel"
+  ruby.on_version "=", "1.8.6", "download sources", :rubyxver => '1.8', :arcver => '1.8.6-p388'
+  #ruby.on_version "=", "1.8.7", "download sources", :rubyxver => '1.8', :arcver => '1.8.7-p249'
+  ruby.on_version "=", "1.9.1", "download sources", :rubyxver => '1.9', :arcver => '1.9.1-p376'
+
+  ruby.on_version "=", "1.8.6", "create rpm package", :spec => "#{@project_dir}/template-1.8.6.spec", :mock => @system_mock_env, :rubyxver => '1.8', :rubyver => '1.8.6', :patchlevel => '388'
+  ruby.on_version "=", "1.9.1", "create rpm package", :spec => "#{@project_dir}/template-1.9.1.spec", :mock => @system_mock_env, :rubyxver => '1.9', :rubyver => '1.9.1', :patchlevel => '376'
+
+  ruby.on_version "*",          "update yum repo", :repo => "#{@artifacts_dir}/repos/rawhide"
+  ruby.on_version "=", "1.8.6", "update yum repo", :repo => "#{@artifacts_dir}/repos/stable"
+  ruby.on_version "=", "1.9.1", "update yum repo", :repo => "#{@artifacts_dir}/repos/devel"
 end
