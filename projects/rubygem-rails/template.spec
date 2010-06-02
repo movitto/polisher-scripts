@@ -4,7 +4,7 @@
 %define gemname <%= spec.name %>
 %define geminstdir %{gemdir}/gems/%{gemname}-%{version}
 
-%define rubyabi 1.8
+%define rubyabi
 
 Summary: Web-application framework
 Name: rubygem-%{gemname}

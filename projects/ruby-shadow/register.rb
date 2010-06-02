@@ -2,9 +2,9 @@
 
 project :name => 'ruby-shadow' do |shadow|
   shadow.add_archive :name => 'shadow', :uri => 'http://ttsky.net/src/ruby-shadow-%{version}.tar.gz', :primary_source => true
-  shadow.add_patch   :name => 'ruby-shadow-1.4.1-cflags', :uri => "#{@fedora_cvs}/ruby-shadow-1.4.1-cflags.patch?view=co"
-  shadow.add_patch   :name => 'ruby-depend-1.4.1-cflags', :uri => "#{@fedora_cvs}/ruby-shadow-1.4.1-depend.patch?view=co"
-  shadow.add_patch   :name => 'ruby-struct-1.4.1-cflags', :uri => "#{@fedora_cvs}/ruby-shadow-1.4.1-struct.patch?view=co"
+  shadow.add_patch   :name => 'ruby-shadow-1.4.1-extconf', :uri => "#{@morsiorg_polisher_sources}/ruby-shadow-1.4.1-extconf-fixes.patch"
+  shadow.add_patch   :name => 'ruby-shadow-1.4.1-depend',  :uri => "#{@morsiorg_polisher_sources}/ruby-shadow-1.4.1-update-depend-to-ruby19.patch"
+  shadow.add_patch   :name => 'ruby-shadow-1.4.1-shadowc', :uri => "#{@morsiorg_polisher_sources}/ruby-shadow-1.4.1-update-shadowc-to-ruby19.patch"
 
   shadow.version "*", :depends_on => project(:name => 'ruby')
 

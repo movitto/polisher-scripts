@@ -8,7 +8,7 @@
 # When changing release number, please make it sure that
 # the new EVR won't be higher than the one of higher branch!!
 #
-%define         mainrel                6
+%define         mainrel                3
 
 # Note
 # Currently this spec file does not support libgda module.
@@ -33,12 +33,6 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-all-%{version}.
 # Currently Fedora specific patch
 # Fix shebang on sample files
 Patch0:         ruby-gnome2-0.17.0-rc1-script.patch
-# Patch from upstream
-# Fix crash when moving curson on fantasdic 1.0 beta 7 
-# (ruby-gnome2-Bugs-2865895)
-Patch10:        ruby-gnome2-0.19.3-crash-moving-cursor-bz2865895.patch
-# Must contact upstream
-Patch11:  ruby-gnome2-0.19.3-xul192.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -773,8 +767,6 @@ This package provides libraries and header files for ruby-vte
 %setup -q -n %{name}-all-%{version}
 #%%setup -q -n %{name}-all-%{version}-%{betaver}
 %patch0 -p1
-%patch10 -p0
-%patch11 -p1
 
 # Keep timestamps as much as possible
 find . -type f -name depend | xargs sed -i -e 's|-m 0644 -v|-m 0644 -p -v|'
@@ -794,7 +786,7 @@ set -x
 ruby extconf.rb
 export CFLAGS="$RPM_OPT_FLAGS"
 
-make %{?_smp_mflags}
+make %{?_smp_mflags} -k
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -958,11 +950,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755, root, root) %{ruby_sitelib}/gtk2/base.rb
 #%{ruby_sitelib}/gtk2/base.rb
 %{ruby_sitearch}/gtk2.so
-# For now include gio here
-%if 0
-%{ruby_sitelib}/gio2.rb
-%{ruby_sitearch}/gio2.so
-%endif
 
 %files -n ruby-gtk2-devel
 %defattr(-,root,root,-)
@@ -1100,8 +1087,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 0.19.3-6
-- removed static ruby abi version dep
+* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 0.19.4-3
+- removed static ruby abi version dep, bumped version for polisher
+
+* Fri May 7 2010 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp>
+- F-13+: rebuild
+
+* Thu Apr 29 2010 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> - 0.19.4-1
+- Update to 0.19.4, drop all upstreamed patches
 
 * Fri Nov 20 2009 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> - 0.19.3-5
 - Patch to compile with xulrunner 1.9.2

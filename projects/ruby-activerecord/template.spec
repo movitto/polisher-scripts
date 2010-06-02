@@ -27,7 +27,7 @@ BuildRequires:  ruby(sqlite3)
 %endif
 BuildRequires: rubygems
 Requires:      rubygems
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 Requires:       ruby(active_support) = 2.0.1
 Provides:       ruby(active_record) = %{version}
 

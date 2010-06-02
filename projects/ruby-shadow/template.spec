@@ -10,9 +10,10 @@ Group:          System Environment/Libraries
 License:        Public Domain
 URL:            http://ttsky.net/
 Source0:        http://ttsky.net/src/ruby-shadow-%{version}.tar.gz
-Patch0:         ruby-shadow-1.4.1-cflags.patch
-Patch1:         ruby-shadow-1.4.1-struct.patch
-Patch2:         ruby-shadow-1.4.1-depend.patch
+Patch0:         ruby-shadow-1.4.1-extconf-fixes.patch
+# FIXME these two patches should only be applied when building against Ruby 1.9
+Patch1:         ruby-shadow-1.4.1-update-depend-to-ruby19.patch
+Patch2:         ruby-shadow-1.4.1-update-shadowc-to-ruby19.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  ruby ruby-devel
 BuildRequires:  ruby(abi)
@@ -24,9 +25,9 @@ Ruby bindings for shadow password access
 
 %prep
 %setup -q -n shadow-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch0
+%patch1
+%patch2
 %{_bindir}/iconv -f EUCJP -t utf8 -o README.ja README.euc
 
 %build

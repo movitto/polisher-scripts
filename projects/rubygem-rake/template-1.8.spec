@@ -10,7 +10,7 @@ Summary: Ruby based make-like utility
 Name: rubygem-%{gemname}
 
 Version: <%= spec.version %>
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group: Development/Languages
 License: MIT
 URL: http://rake.rubyforge.org
@@ -84,6 +84,9 @@ ruby ./bin/rake test || :
 
 
 %changelog
+* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 0.8.7-3
+- bumped release for polisher
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

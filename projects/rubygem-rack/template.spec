@@ -15,7 +15,7 @@ Source0:        http://gems.rubyforge.org/gems/%{gemname}-%{version}.gem
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       rubygems
-Requires:       ruby(abi) = 1.8
+Requires:       ruby(abi)
 BuildRequires:  rubygems
 BuildRequires(check):   rubygem(rake)
 BuildRequires(check):   rubygem(test-spec)

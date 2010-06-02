@@ -8,7 +8,7 @@
 Summary: The Ruby standard for packaging ruby libraries
 Name: <%= name %>
 Version: <%= version %>
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Development/Libraries
 # No GPL version is specified.
 License: Ruby or GPL+
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed May 25 2010 Mo Morsi <mmorsi@redhat.com> - 1.3.5-2
+- bumped release for polisher
+
 * Mon Sep 21 2009 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> - 1.3.5-1
 - Update to 1.3.5
 

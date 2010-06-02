@@ -60,6 +60,7 @@ BuildRequires:      unzip
 BuildRequires:      tcl-devel
 BuildRequires:      tk-devel
 
+
 Source0:            ftp://ftp.ruby-lang.org/pub/%{name}/%{rubymmver}/ruby-%{arcver}.tar.bz2
 
 # These patches actually make sense
@@ -70,8 +71,12 @@ Patch1:             ruby-1.9.1-p243-always-use-i386.patch
 Patch2:             ruby-1.9.1-p243-mmt-searchpath.patch
 Patch3:             ruby-1.9.1-p243-mmt-searchpath-2.patch
 
-# patch33 brought over from ruby 1.8.6
+# patch23/patch33 brought over from ruby 1.8.6
+Patch23:  ruby-1.9.1-multilib.patch
 Patch33:  ruby-1.9.1-mkmf-use-shared.patch
+
+# patch 34 is from rubygems
+Patch34: ruby-1.9.1-rubygems-noarch-gemdir.patch
 
 # EPEL patches
 Patch100:           ruby-1.9.1-p376-epel-test.patch
@@ -207,7 +212,11 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 # Again these two patches belong together
 %patch2 -p1
 %patch3 -p1
+%ifarch ppc64 s390x sparc64 x86_64
+%patch23
+%endif
 %patch33
+%patch34
 %if 0%{?rhel} > 0
 %patch100 -p1
 %endif
@@ -233,6 +242,9 @@ export CFLAGS
     --enable-pthread \
     --disable-rpath \
     --with-ruby-version=full
+
+# need this for the socket module
+export LD_LIBRARY_PATH=$(pwd)
 
 make COPY="cp -p"
 

@@ -43,6 +43,10 @@ project :name => "ruby" do |ruby|
     patch.version "*", :corresponds_to => ruby.version("1.8.6")
   end
 
+  ruby.add_patch   :name => 'ruby-multilib-1.9.1',            :uri => "#{@morsiorg_polisher_sources}/ruby-1.9.1-multilib.patch" do |patch|
+    patch.version "*", :corresponds_to => ruby.version("1.9.1")
+  end
+
   ruby.add_patch   :name => 'ruby-rexml',                     :uri => "#{@fedora_cvs}/ruby-1.8.6-rexml-CVE-2008-3790.patch?view=co" do |patch|
     patch.version "*", :corresponds_to => ruby.version("1.8.6")
   end
@@ -91,6 +95,11 @@ project :name => "ruby" do |ruby|
   end
 
   ruby.add_patch   :name => 'ruby-1.9.1-p376-epel-test', :uri => "#{@morsiorg_polisher_sources}/ruby-1.9.1-p376-epel-test.patch" do |patch|
+    patch.version "*", :corresponds_to => ruby.version("1.9.1")
+  end
+
+  # since rubygems was added to ruby 1.9 we need to apply related patches here
+  ruby.add_patch   :name => 'ruby-1.9.1-rubygems-noarch-gemdir', :uri => "#{@morsiorg_polisher_sources}/ruby-1.9.1-rubygems-noarch-gemdir.patch" do |patch|
     patch.version "*", :corresponds_to => ruby.version("1.9.1")
   end
 
