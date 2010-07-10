@@ -15,6 +15,10 @@ project :name => "ruby" do |ruby|
     archive.version "*", :corresponds_to => ruby.version("1.8.6")
   end
 
+  ruby.add_archive :name => "ruby-tcltk", :uri => "#{@morsiorg_polisher_sources}/ruby-rev%{tcltk_git_version}-ext_tk.tar.gz" do |archive|
+    archive.version "*", :tcltk_git_version => "415a3ef9ab82c65a7abc", :corresponds_to => ruby.version("1.8.7")
+  end
+
   ruby.add_file    :name => "ruby-irb-man", :uri => "#{@fedora_cvs}/irb.1?view=co" do |file|
     file.version "*", :corresponds_to => ruby.version("1.8.6")
   end
@@ -39,12 +43,10 @@ project :name => "ruby" do |ruby|
     patch.version "*", :corresponds_to => ruby.version("1.8.6")
   end
 
-  ruby.add_patch   :name => 'ruby-multilib',                  :uri => "#{@fedora_cvs}/ruby-multilib.patch?view=co" do |patch|
-    patch.version "*", :corresponds_to => ruby.version("1.8.6")
-  end
-
-  ruby.add_patch   :name => 'ruby-multilib-1.9.1',            :uri => "#{@morsiorg_polisher_sources}/ruby-1.9.1-multilib.patch" do |patch|
-    patch.version "*", :corresponds_to => ruby.version("1.9.1")
+  ruby.add_patch   :name => 'ruby-multilib',                  :uri => "#{@morsiorg_polisher_sources}/ruby-%{multilib_patch_version}multilib.patch" do |patch|
+    patch.version "*", :multilib_patch_version => "",        :corresponds_to => ruby.version("1.8.6")
+    patch.version "*", :multilib_patch_version => "1.8.7-",  :corresponds_to => ruby.version("1.8.7")
+    patch.version "*", :multilib_patch_version => "1.9.1-",  :corresponds_to => ruby.version("1.9.1")
   end
 
   ruby.add_patch   :name => 'ruby-rexml',                     :uri => "#{@fedora_cvs}/ruby-1.8.6-rexml-CVE-2008-3790.patch?view=co" do |patch|
@@ -61,6 +63,7 @@ project :name => "ruby" do |ruby|
 
   ruby.add_patch   :name => 'ruby-always-use-i368', :uri => "#{@morsiorg_polisher_sources}/ruby-%{alwaysusei386_patch_version}always-use-i386.patch" do |patch|
     patch.version "*", :alwaysusei386_patch_version => "",            :corresponds_to => ruby.version("1.8.6")
+    patch.version "*", :alwaysusei386_patch_version => "1.8.7-",      :corresponds_to => ruby.version("1.8.7")
     patch.version "*", :alwaysusei386_patch_version => "1.9.1-p243-", :corresponds_to => ruby.version("1.9.1")
   end
 
@@ -71,6 +74,7 @@ project :name => "ruby" do |ruby|
 
   ruby.add_patch   :name => 'ruby-mkmf-use-shared', :uri => "#{@morsiorg_polisher_sources}/ruby-%{mkmf_patch_version}-mkmf-use-shared.patch?view=co" do |patch|
     patch.version "*", :mkmf_patch_version => "1.8.6-p383", :corresponds_to => ruby.version("1.8.6")
+    patch.version "*", :mkmf_patch_version => "1.8.7-p249", :corresponds_to => ruby.version("1.8.7")
     patch.version "*", :mkmf_patch_version => "1.9.1",      :corresponds_to => ruby.version("1.9.1")
   end
 
@@ -84,6 +88,10 @@ project :name => "ruby" do |ruby|
 
   ruby.add_patch   :name => 'ruby-1.8.6-simplify-openssl-digest', :uri => "#{@fedora_cvs}/ruby-1.8.6-simplify-openssl-digest.patch?view=co" do |patch|
     patch.version "*", :corresponds_to => ruby.version("1.8.6")
+  end
+
+  ruby.add_patch   :name => 'ruby-1.8.7-libs', :uri => "#{@morsiorg_polisher_sources}/ruby-1.8.7-lib-paths.patch" do |patch|
+    patch.version "*", :corresponds_to => ruby.version("1.8.7")
   end
 
   ruby.add_patch   :name => 'ruby-1.9.1-p243-mmt-searchpath', :uri => "#{@morsiorg_polisher_sources}/ruby-1.9.1-p243-mmt-searchpath.patch" do |patch|
@@ -103,16 +111,16 @@ project :name => "ruby" do |ruby|
     patch.version "*", :corresponds_to => ruby.version("1.9.1")
   end
 
-  # TODO add events and release for ruby 1.8.7 (write to maintenance repo)
-
   ruby.on_version "=", "1.8.6", "download sources", :rubyxver => '1.8', :arcver => '1.8.6-p388'
-  #ruby.on_version "=", "1.8.7", "download sources", :rubyxver => '1.8', :arcver => '1.8.7-p249'
+  ruby.on_version "=", "1.8.7", "download sources", :rubyxver => '1.8', :arcver => '1.8.7-p299'
   ruby.on_version "=", "1.9.1", "download sources", :rubyxver => '1.9', :arcver => '1.9.1-p376'
 
   ruby.on_version "=", "1.8.6", "create rpm package", :spec => "#{@project_dir}/template-1.8.6.spec", :mock => @system_mock_env, :rubyxver => '1.8', :rubyver => '1.8.6', :patchlevel => '388'
+  ruby.on_version "=", "1.8.7", "create rpm package", :spec => "#{@project_dir}/template-1.8.7.spec", :mock => @system_mock_env, :rubyxver => '1.8', :rubyver => '1.8.7', :patchlevel => '299'
   ruby.on_version "=", "1.9.1", "create rpm package", :spec => "#{@project_dir}/template-1.9.1.spec", :mock => @system_mock_env, :rubyxver => '1.9', :rubyver => '1.9.1', :patchlevel => '376'
 
   ruby.on_version "*",          "update yum repo", :repo => "#{@artifacts_dir}/repos/rawhide"
   ruby.on_version "=", "1.8.6", "update yum repo", :repo => "#{@artifacts_dir}/repos/stable"
+  ruby.on_version "=", "1.8.7", "update yum repo", :repo => "#{@artifacts_dir}/repos/maintenance"
   ruby.on_version "=", "1.9.1", "update yum repo", :repo => "#{@artifacts_dir}/repos/devel"
 end

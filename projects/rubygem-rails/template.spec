@@ -4,7 +4,7 @@
 %define gemname <%= spec.name %>
 %define geminstdir %{gemdir}/gems/%{gemname}-%{version}
 
-%define rubyabi
+%define rubyabi 1.8
 
 Summary: Web-application framework
 Name: rubygem-%{gemname}
@@ -43,11 +43,14 @@ Oracle with eRuby- or Builder-based templates.
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{gemdir}
+<% if spec.version.to_s >= "3.0.0" %>
+# XXX ugly hack http://groups.google.com/group/rubyonrails-talk/browse_thread/thread/19762248a134854f
+mkdir -p %{buildroot}%{geminstdir}/lib
+<% end %>
 gem install --local --install-dir %{buildroot}%{gemdir} \
             -V \
             --force %{SOURCE0}
 
-%if "%{version}" == "2.3.5"
 mkdir -p %{buildroot}/%{_bindir}
 mv %{buildroot}%{gemdir}/bin/* %{buildroot}/%{_bindir}
 rmdir %{buildroot}%{gemdir}/bin
@@ -86,7 +89,6 @@ find %{buildroot}/%{geminstdir} -type f -perm /g+wx -exec chmod -v g-w {} \;
 
 # Find files that are not readable
 find %{buildroot}/%{geminstdir} -type f ! -perm /go+r -exec chmod -v go+r {} \;
-%endif
 
 %clean
 rm -rf %{buildroot}
@@ -97,8 +99,8 @@ rm -rf %{buildroot}
 %{gemdir}/specifications/%{gemname}-%{version}.gemspec
 
 %defattr(-, root, root, -)
-%if "%{version}" == "2.3.5"
 %{geminstdir}/bin
+<% unless spec.version.to_s >= "3.0.0" %>
 %{geminstdir}/builtin
 %doc %{geminstdir}/CHANGELOG
 %{geminstdir}/configs
@@ -113,11 +115,8 @@ rm -rf %{buildroot}
 %doc %{geminstdir}/MIT-LICENSE
 %{geminstdir}/Rakefile
 %doc %{geminstdir}/README
+<% end %>
 %{_bindir}/rails
-%else
-%{geminstdir}/.require_paths
-%endif
-
 
 %changelog
 * Thu Jan 28 2010 Mamoru Tasaka <mtasaka@ioa.s.u-tokyo.ac.jp> - 1:2.3.5-1

@@ -7,12 +7,11 @@ project :name => 'rubygem-rails' do |rails|
   
   rails.on_version "*",           "download sources"
 
-  rails.on_version "=", "2.3.5", "create rpm package", :spec => "#{@project_dir}/template.spec", :mock => @stable_mock_env
-  rails.on_version "=", "2.3.5", "update yum repo",    :repo => "#{@artifacts_dir}/repos/stable", :delete_rpms => true
+  rails.on_version "=", "2.3.8", "create rpm package", :spec => "#{@project_dir}/template.spec", :mock => @stable_mock_env
+  rails.on_version "=", "2.3.8", "update yum repo",    :repo => "#{@artifacts_dir}/repos/stable", :delete_rpms => true
 
-  # TODO uncomment when ruby 1.8.7 is setup in maintenance repo
-  #rails.on_version ">=", "3.0.0", "create rpm package", :spec => "#{@project_dir}/template.spec", :mock => @maintenance_mock_env
-  #rails.on_version ">=", "3.0.0", "update yum repo",    :repo => "#{@artifacts_dir}/repos/maintenance", :delete_rpms => true
+  rails.on_version ">=", "2.3.8", "create rpm package", :spec => "#{@project_dir}/template.spec", :mock => @maintenance_mock_env
+  rails.on_version ">=", "2.3.8", "update yum repo",    :repo => "#{@artifacts_dir}/repos/maintenance", :delete_rpms => true
 
   # uncomment when rails is supportend on ruby 1.9
   #rails.on_version ">=", "3.0.0", "create rpm package", :spec => "#{@project_dir}/template.spec", :mock => @devel_mock_env
